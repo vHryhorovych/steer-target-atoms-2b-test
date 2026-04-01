@@ -10,3 +10,4 @@ numpy==1.26.4
 google_api_python_client==2.156.0
 ipykernel==6.27.1
 plot==0.6.5
+hugginface_hub==0.23.2

@@ -848,7 +848,7 @@ def activation_selection_contrastive_for_only_sys(
 def load_gemma_2_sae(
     sae_path: str,
     device: str = "cpu",
-    repo_id: str = "gemma-scope-9b-it-res",
+    repo_id: str = "gemma-scope-2b-pt-res",
     force_download: bool = False,
     cfg_overrides: Optional[Dict[str, Any]] = None,
     d_sae_override: Optional[int] = None,

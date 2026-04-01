@@ -32,7 +32,7 @@ from dataloader import (
     SafetyDataset
 )
 from transformers import AutoTokenizer
-from baseline.caa.utils.input_format import llama3_chat_input_format
+
 
 import pdb
 
@@ -108,12 +108,13 @@ if __name__ == "__main__":
     args = parser.parse_args()
     print(args)
 
-    device = "cuda:0"
+    device = "cuda:0" if torch.cuda.is_available() else "cpu"
+    print(f"Using device: {device}")
     if "gemma" in args.model_name_or_path.lower():
         sae, sparsity = load_gemma_2_sae(args.sae_path, device=device)
     else:
         sae, sparsity = load_sae_from_dir(args.sae_path, device=device)
-
+    
     model = HookedTransformer.from_pretrained(
         args.model_name_or_path,
         device=device,
@@ -173,6 +174,14 @@ if __name__ == "__main__":
                             ques = args.system_prompt + " " + ques
                         else:
                             ques = args.system_prompt
+                
+                if args.model_name=="gemma-2-2b":
+                    if args.system_prompt != "":
+                        if ques is not None:
+                            ques = args.system_prompt + " " + ques
+                        else:
+                            ques = args.system_prompt
+
                 # # 生成vector的input_forma体现在--args.AB
                 elif args.model_name=="gemma-2-9b-it" and args.AB == False:
                     if args.system_prompt != "":

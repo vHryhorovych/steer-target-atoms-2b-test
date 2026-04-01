@@ -1,13 +1,14 @@
 device=0
 
-model_name_or_path=./model/gemma-2-9b # replace ./model/gemma-2-9b with your own model path
+model_name_or_path=./model/gemma-2-2b # replace ./model/gemma-2-9b with your own model path
 data_dir=./data/safety
-model_name=gemma-2-9b
+model_name=gemma-2-2b
 
 sae_paths=(
     # you can download the sea from this url: https://huggingface.co/google/gemma-scope-9b-pt-res/tree/main/layer_24/width_16k/average_l0_114
     # then you should replace the path (/mnt/sae/gemma-scope-9b-pt-res/layer_24/width_16k/average_l0_114) with your own sae path
-    /mnt/sae/gemma-scope-9b-pt-res/layer_24/width_16k/average_l0_114
+    #/Users/vladyslavhryhorovych/Study/master/steer-target-atoms/sae/gemma-2-2b/layer_14/width_16k/average_l0_173
+    /projectnb/tin-lab/vhryhorovych/steer-target-atoms-2b-test/sae/gemma-2-2b/layer_14/width_16k/average_l0_173
 )
 
 suffix=16k
@@ -52,6 +53,6 @@ for ((i=0; i<${sae_num}; i++)); do
         --data_name ${data_name} \
         --steering_vector_name ${model_name}_sae_layer${layer}_${hook_module}_${suffix}_steering_vector.pt \
         --output_file ${output_file} \
-        --select_type ${select_type} > ${log_path} 2>&1  
+        --select_type ${select_type} #> ${log_path} 2>&1  
 
 done

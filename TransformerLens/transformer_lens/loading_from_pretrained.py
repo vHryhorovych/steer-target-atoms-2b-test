@@ -695,6 +695,9 @@ def get_official_model_name(model_name: str):
     """
     Returns the official model name for a given model name (or alias).
     """
+    if (Path(model_name) / "config.json").exists():
+        logging.info("Loading model from local directory")
+        return model_name
     model_alias_map = make_model_alias_map()
     official_model_name = model_alias_map.get(model_name.lower(), None)
     if official_model_name is None:
@@ -1237,7 +1240,7 @@ def convert_hf_model_config(model_name: str, **kwargs):
             "gated_mlp": True,
             "final_rms": True,
         }
-    elif official_model_name.startswith("google/gemma-2-2b"):
+    elif official_model_name.startswith("google/gemma-2-2b") or "gemma-2-2b" in official_model_name.lower():
         # Architecture for Gemma-2 2b and Gemma-2 2b Instruct models
         cfg_dict = {
             "d_model": 2304,
